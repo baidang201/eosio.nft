@@ -1,8 +1,9 @@
-file(GLOB ABI_FILES "*.abi")
-configure_file("${ABI_FILES}" "${CMAKE_CURRENT_BINARY_DIR}" COPYONLY)
 
-add_wast_executable(TARGET eosio.nft
-  INCLUDE_FOLDERS ${STANDARD_INCLUDE_FOLDERS}
-  LIBRARIES libc++ libc eosiolib eosio.nft
-  DESTINATION_FOLDER ${CMAKE_CURRENT_BINARY_DIR}
-)
+add_contract(eosio.nft eosio.nft ${CMAKE_CURRENT_SOURCE_DIR}/eosio.nft.cpp)
+target_include_directories(eosio.nft.wasm
+   PUBLIC
+   ${CMAKE_CURRENT_SOURCE_DIR})
+
+set_target_properties(eosio.nft.wasm
+   PROPERTIES
+   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
